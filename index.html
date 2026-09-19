@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compound Growth & Investment Calculator | Bharrys Financial Suite</title>
+    <!-- GoatCounter Analytics Tracker with Load/Error Handlers -->
+    <script 
+        data-goatcounter="https://bharrys.goatcounter.com/count" 
+        async 
+        src="//gc.zgo.at/count.js" 
+        id="goatcounter-script"
+        onload="window.goatcounterLoaded = true;"
+        onerror="window.goatcounterBlocked = true;">
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -125,7 +134,7 @@
 
         <!-- Hero Banner with Presets -->
         <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-700/80 text-xs font-medium text-emerald-400 mb-2">
                         <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
@@ -140,9 +149,9 @@
                 </div>
 
                 <!-- Asset Return Presets -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 shrink-0 no-print">
-                    <span class="text-xs font-mono text-slate-400">Benchmark Presets:</span>
-                    <div class="flex flex-wrap gap-2">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full lg:w-auto shrink-0 no-print">
+                    <span class="text-xs font-mono text-slate-400 whitespace-nowrap">Benchmark Presets:</span>
+                    <div class="flex flex-wrap gap-2 w-full sm:w-auto">
                         <button type="button" onclick="loadPreset('savings')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-cyan-400 border border-slate-700 transition">
                             Savings Account (0.45%)
                         </button>
