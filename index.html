@@ -117,6 +117,11 @@
             </div>
 
             <div class="flex items-center gap-2 sm:gap-3">
+                <button type="button" onclick="shareConfiguration()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-semibold text-cyan-400 hover:text-white hover:border-cyan-500 transition cursor-pointer">
+                    <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                    <span id="share-btn-text">Share Setup</span>
+                </button>
+
                 <button type="button" onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-semibold text-emerald-400 hover:text-white hover:border-emerald-500 transition cursor-pointer">
                     <i data-lucide="printer" class="w-3.5 h-3.5"></i>
                     <span>Print Report</span>
@@ -416,11 +421,6 @@
     <footer class="border-t border-slate-800/80 bg-[#090d16] text-slate-500 text-xs py-6 mt-auto relative z-10">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
             <p>&copy; <span id="year"></span> Bharrys Ventures. Compound Growth Suite</p>
-            <div class="flex items-center gap-4 text-slate-400">
-                <a href="https://financialhub.bharrys.com" class="hover:text-emerald-400 transition">Suite Hub</a>
-                <span class="text-slate-800">•</span>
-                <a href="#" class="hover:text-emerald-400 transition">Mortgage Calculator</a>
-            </div>
         </div>
     </footer>
 
@@ -455,6 +455,47 @@
 
             slider.value = rateInput.value;
             calculateAll();
+        }
+
+        function shareConfiguration() {
+            const initial = document.getElementById('input-initial').value;
+            const contribution = document.getElementById('input-contribution').value;
+            const frequency = document.getElementById('input-frequency').value;
+            const rate = document.getElementById('input-rate').value;
+            const compound = document.getElementById('input-compound').value;
+            const years = document.getElementById('input-years').value;
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('initial', initial);
+            url.searchParams.set('contribution', contribution);
+            url.searchParams.set('frequency', frequency);
+            url.searchParams.set('rate', rate);
+            url.searchParams.set('compound', compound);
+            url.searchParams.set('years', years);
+
+            navigator.clipboard.writeText(url.toString()).then(() => {
+                const btnText = document.getElementById('share-btn-text');
+                btnText.textContent = 'Link Copied!';
+                setTimeout(() => {
+                    btnText.textContent = 'Share Setup';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy share link: ', err);
+            });
+        }
+
+        function loadFromUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('initial')) document.getElementById('input-initial').value = params.get('initial');
+            if (params.has('contribution')) document.getElementById('input-contribution').value = params.get('contribution');
+            if (params.has('frequency')) document.getElementById('input-frequency').value = params.get('frequency');
+            if (params.has('rate')) {
+                const rate = params.get('rate');
+                document.getElementById('input-rate').value = rate;
+                document.getElementById('slider-rate').value = rate;
+            }
+            if (params.has('compound')) document.getElementById('input-compound').value = params.get('compound');
+            if (params.has('years')) document.getElementById('input-years').value = params.get('years');
         }
 
         function calculateAll() {
@@ -543,6 +584,7 @@
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+            loadFromUrlParams();
             calculateAll();
         });
     </script>
